@@ -1,0 +1,207 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
+  PRISMA FINANZAS - Diseño inspirado en Kyriakos UI pero con colores originales
+*/
+
+@layer base {
+  :root {
+    /* Fondos - Blanco/Beige claro estilo Aetherfield */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+
+    /* Cards y superficies */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+
+    /* Primario - Negro para botones y elementos principales */
+    --primary: 0 0% 0%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secundario - Azul claro para gradientes */
+    --secondary: 200 100% 85%;
+    --secondary-foreground: 0 0% 0%;
+
+    /* Muted - Beige claro */
+    --muted: 45 20% 96%;
+    --muted-foreground: 0 0% 40%;
+
+    /* Accent - Amarillo vibrante estilo Aetherfield */
+    --accent: 48 100% 50%;
+    --accent-foreground: 0 0% 0%;
+
+    /* Destructive - Rojo para alertas */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Success - Verde para ganancias */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+
+    /* Warning - Amarillo para advertencias */
+    --warning: 48 100% 50%;
+    --warning-foreground: 0 0% 0%;
+
+    /* Bordes e inputs - Negro grueso estilo Aetherfield */
+    --border: 0 0% 0%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 0%;
+
+    /* Radius premium */
+    --radius: 1rem;
+    --radius-lg: 1.25rem;
+    --radius-xl: 1.5rem;
+
+    /* Sidebar */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 239 84% 67%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 20% 96%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 214 32% 91%;
+    --sidebar-ring: 239 84% 67%;
+
+    /* Gradientes premium */
+    --gradient-primary: linear-gradient(135deg, hsl(239 84% 67%) 0%, hsl(217 91% 60%) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(210 20% 99%) 0%, hsl(210 40% 96%) 100%);
+    --gradient-glass: linear-gradient(135deg, hsla(0, 0%, 100%, 0.9) 0%, hsla(0, 0%, 100%, 0.7) 100%);
+    --gradient-success: linear-gradient(135deg, hsl(142 76% 36%) 0%, hsl(158 64% 52%) 100%);
+    --gradient-danger: linear-gradient(135deg, hsl(0 84% 60%) 0%, hsl(25 95% 53%) 100%);
+
+    /* Sombras premium - suaves y difusas */
+    --shadow-sm: 0 1px 2px 0 hsla(222, 47%, 11%, 0.03), 0 1px 3px 0 hsla(222, 47%, 11%, 0.05);
+    --shadow-md: 0 4px 6px -1px hsla(222, 47%, 11%, 0.05), 0 2px 4px -2px hsla(222, 47%, 11%, 0.05);
+    --shadow-lg: 0 10px 15px -3px hsla(222, 47%, 11%, 0.06), 0 4px 6px -4px hsla(222, 47%, 11%, 0.05);
+    --shadow-xl: 0 20px 25px -5px hsla(222, 47%, 11%, 0.08), 0 8px 10px -6px hsla(222, 47%, 11%, 0.05);
+    --shadow-glow: 0 0 30px -5px hsla(239, 84%, 67%, 0.25);
+    --shadow-card: 0 1px 3px 0 hsla(222, 47%, 11%, 0.04), 0 1px 2px -1px hsla(222, 47%, 11%, 0.04);
+    --shadow-card-hover: 0 10px 40px -10px hsla(222, 47%, 11%, 0.12);
+
+    /* Glassmorphism */
+    --glass-bg: hsla(0, 0%, 100%, 0.8);
+    --glass-border: hsla(0, 0%, 100%, 0.5);
+    --glass-blur: 12px;
+  }
+
+  .dark {
+    --background: 222 47% 6%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 8%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 8%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 239 84% 67%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 217 91% 60%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 217 33% 17%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 239 84% 67%;
+
+    --sidebar-background: 222 47% 8%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 239 84% 67%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 217 33% 17%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217 33% 17%;
+    --sidebar-ring: 239 84% 67%;
+
+    --glass-bg: hsla(222, 47%, 8%, 0.8);
+    --glass-border: hsla(0, 0%, 100%, 0.1);
+  }
+}
+
+@layer base {
+  html.lenis {
+    height: auto;
+  }
+  
+  .lenis.lenis-smooth {
+    scroll-behavior: auto;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased overflow-x-hidden;
+  }
+
+  ::selection {
+    background-color: hsl(var(--primary));
+    color: white;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  .magnetic-btn {
+    display: inline-block;
+    will-change: transform;
+  }
+  
+  .hero-char {
+    display: inline-block;
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(20px);
+    will-change: transform, opacity, filter;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, hsla(239, 84%, 67%, 0.15) 0%, rgba(255,255,255,0) 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: -1;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0;
+  }
+
+  .marquee-track {
+    display: flex;
+    white-space: nowrap;
+    width: max-content;
+    will-change: transform;
+    animation: marquee 40s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+}
