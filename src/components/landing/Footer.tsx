@@ -1,53 +1,119 @@
 import { Link } from "react-router-dom";
+import { Sparkles, Twitter, Linkedin, Instagram } from "lucide-react";
+
 const footerLinks = {
-  producto: [{
-    name: "Producto",
-    href: "#features"
-  }, {
-    name: "Precios",
-    href: "#pricing"
-  }, {
-    name: "Blog",
-    href: "/blog"
-  }],
-  empresa: [{
-    name: "Acerca de",
-    href: "#about"
-  }, {
-    name: "Carreras",
-    href: "#careers"
-  }]
+  producto: [
+    { name: "Funciones", href: "#features" },
+    { name: "Precios", href: "#pricing" },
+    { name: "FAQ", href: "#faq" },
+  ],
+  empresa: [
+    { name: "Acerca de", href: "#about" },
+    { name: "Blog", href: "/blog" },
+    { name: "Contacto", href: "/contacto" },
+  ],
+  legal: [
+    { name: "Privacidad", href: "/privacidad" },
+    { name: "Términos", href: "/terminos" },
+  ],
 };
+
+const socialLinks = [
+  { name: "Twitter", icon: Twitter, href: "#" },
+  { name: "LinkedIn", icon: Linkedin, href: "#" },
+  { name: "Instagram", icon: Instagram, href: "#" },
+];
+
 export function Footer() {
-  return <footer className="bg-accent border-t-2 border-foreground">
+  return (
+    <footer className="bg-foreground text-white relative overflow-hidden">
+      {/* Decorative gradient */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-primary" />
+      
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-16">
         {/* Top Section */}
-        <div className="flex flex-col md:flex-row justify-between items-start mb-16 pb-8 border-b-2 border-foreground/20">
-          {/* Navigation */}
-          <div className="flex flex-wrap gap-8 mb-8 md:mb-0">
-            {footerLinks.producto.map(link => <a key={link.name} href={link.href} className="font-mono text-sm text-foreground hover:underline">
-                {link.name}
-              </a>)}
-            {footerLinks.empresa.map(link => <a key={link.name} href={link.href} className="font-mono text-sm text-foreground hover:underline">
-                {link.name}
-              </a>)}
-            <Link to="/auth" className="font-mono text-sm text-foreground hover:underline">
-              Comenzar →
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+          {/* Brand */}
+          <div className="md:col-span-1">
+            <Link to="/" className="inline-flex items-center gap-2.5 mb-4">
+              <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                <Sparkles className="h-5 w-5 text-white" />
+              </div>
+              <span className="text-xl font-bold">Finanet</span>
             </Link>
+            <p className="text-white/60 text-sm mb-6">
+              Claridad financiera para tu negocio. Domina tus números con confianza.
+            </p>
+            {/* Social Links */}
+            <div className="flex gap-3">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.href}
+                  className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors"
+                  aria-label={social.name}
+                >
+                  <social.icon className="h-5 w-5" />
+                </a>
+              ))}
+            </div>
           </div>
           
-          {/* Copyright */}
-          <p className="font-mono text-sm text-foreground/80">© 2026 Todos los derechos reservados</p>
+          {/* Links */}
+          <div>
+            <h4 className="font-semibold mb-4">Producto</h4>
+            <ul className="space-y-3">
+              {footerLinks.producto.map((link) => (
+                <li key={link.name}>
+                  <a href={link.href} className="text-white/60 hover:text-white transition-colors text-sm">
+                    {link.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+          <div>
+            <h4 className="font-semibold mb-4">Empresa</h4>
+            <ul className="space-y-3">
+              {footerLinks.empresa.map((link) => (
+                <li key={link.name}>
+                  <a href={link.href} className="text-white/60 hover:text-white transition-colors text-sm">
+                    {link.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+          <div>
+            <h4 className="font-semibold mb-4">Legal</h4>
+            <ul className="space-y-3">
+              {footerLinks.legal.map((link) => (
+                <li key={link.name}>
+                  <a href={link.href} className="text-white/60 hover:text-white transition-colors text-sm">
+                    {link.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
-        {/* Large Logo */}
-        <div className="pt-8">
-          <Link to="/" className="inline-block">
-            <h1 className="font-serif text-6xl md:text-8xl lg:text-9xl font-normal text-foreground tracking-tight">
-              Prisma
-            </h1>
+        {/* Bottom Section */}
+        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-white/50 text-sm">
+            © 2026 Finanet. Todos los derechos reservados.
+          </p>
+          <Link 
+            to="/auth" 
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-secondary text-white px-6 py-2.5 rounded-full text-sm font-medium hover:shadow-friendly transition-all"
+          >
+            <span>Comenzar gratis</span>
+            <span>✨</span>
           </Link>
         </div>
       </div>
-    </footer>;
+    </footer>
+  );
 }

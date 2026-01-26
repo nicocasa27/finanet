@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        serif: ['Source Serif Pro', 'Georgia', 'serif'],
+        sans: ['Poppins', 'system-ui', 'sans-serif'],
+        body: ['Inter', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
       colors: {
@@ -77,7 +77,8 @@ export default {
         sm: "calc(var(--radius) - 4px)",
         xl: "var(--radius-lg)",
         "2xl": "var(--radius-xl)",
-        "3xl": "1.75rem",
+        "3xl": "2rem",
+        "4xl": "2.5rem",
       },
       boxShadow: {
         'premium-sm': 'var(--shadow-sm)',
@@ -87,6 +88,8 @@ export default {
         'premium-glow': 'var(--shadow-glow)',
         'card': 'var(--shadow-card)',
         'card-hover': 'var(--shadow-card-hover)',
+        'friendly': '0 8px 30px -10px hsla(262, 83%, 58%, 0.2)',
+        'friendly-lg': '0 20px 50px -15px hsla(262, 83%, 58%, 0.25)',
       },
       keyframes: {
         "accordion-down": {
@@ -114,8 +117,16 @@ export default {
           "50%": { transform: "translateY(-10px)" },
         },
         "pulse-glow": {
-          "0%, 100%": { boxShadow: "0 0 20px -5px hsla(239, 84%, 67%, 0.3)" },
-          "50%": { boxShadow: "0 0 30px -5px hsla(239, 84%, 67%, 0.5)" },
+          "0%, 100%": { boxShadow: "0 0 20px -5px hsla(262, 83%, 58%, 0.3)" },
+          "50%": { boxShadow: "0 0 40px -5px hsla(262, 83%, 58%, 0.5)" },
+        },
+        "bounce-soft": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-5px)" },
+        },
+        "wiggle": {
+          "0%, 100%": { transform: "rotate(-2deg)" },
+          "50%": { transform: "rotate(2deg)" },
         },
       },
       animation: {
@@ -126,6 +137,8 @@ export default {
         "scale-in": "scale-in 0.3s ease-out forwards",
         "float": "float 3s ease-in-out infinite",
         "pulse-glow": "pulse-glow 2s ease-in-out infinite",
+        "bounce-soft": "bounce-soft 2s ease-in-out infinite",
+        "wiggle": "wiggle 1s ease-in-out infinite",
       },
     },
   },

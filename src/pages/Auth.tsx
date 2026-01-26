@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/contexts/AuthContext";
-import { Sparkles, ArrowLeft, Eye, EyeOff, Loader2 } from "lucide-react";
+import { Sparkles, ArrowLeft, Eye, EyeOff, Loader2, CheckCircle2 } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 
@@ -99,30 +99,32 @@ export default function Auth() {
   return (
     <div className="min-h-screen flex">
       {/* Left side - Form */}
-      <div className="flex-1 flex flex-col justify-center px-8 py-12 lg:px-16">
+      <div className="flex-1 flex flex-col justify-center px-8 py-12 lg:px-16 bg-background">
         <div className="mx-auto w-full max-w-md">
           {/* Back link */}
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-8"
           >
             <ArrowLeft className="h-4 w-4" />
             Volver al inicio
           </Link>
 
           {/* Logo */}
-          <Link to="/" className="inline-flex items-center gap-2 mb-8">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-              <Sparkles className="h-5 w-5 text-primary-foreground" />
+          <Link to="/" className="inline-flex items-center gap-2.5 mb-8">
+            <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-friendly">
+              <Sparkles className="h-6 w-6 text-white" />
             </div>
-            <span className="text-2xl font-bold">PRISMA</span>
+            <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              Finanet
+            </span>
           </Link>
 
           {/* Title */}
-          <h1 className="text-3xl font-bold mb-2">
+          <h1 className="text-3xl font-bold mb-2 text-foreground">
             {mode === "login" ? "Bienvenido de vuelta" : "Crea tu cuenta"}
           </h1>
-          <p className="text-muted-foreground mb-8">
+          <p className="text-muted-foreground mb-8 font-body">
             {mode === "login"
               ? "Ingresa tus datos para acceder a tu cuenta"
               : "Comienza gratis y conoce tus números"}
@@ -132,14 +134,14 @@ export default function Auth() {
           <form onSubmit={handleSubmit} className="space-y-5">
             {mode === "signup" && (
               <div className="space-y-2">
-                <Label htmlFor="name">Nombre completo</Label>
+                <Label htmlFor="name" className="text-sm font-medium">Nombre completo</Label>
                 <Input
                   id="name"
                   type="text"
                   placeholder="Tu nombre"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className={`h-12 rounded-xl ${errors.name ? "border-destructive" : ""}`}
+                  className={`h-12 rounded-2xl border-2 ${errors.name ? "border-destructive" : "border-border focus:border-primary"}`}
                 />
                 {errors.name && (
                   <p className="text-xs text-destructive">{errors.name}</p>
@@ -148,14 +150,14 @@ export default function Auth() {
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-sm font-medium">Email</Label>
               <Input
                 id="email"
                 type="email"
                 placeholder="tu@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className={`h-12 rounded-xl ${errors.email ? "border-destructive" : ""}`}
+                className={`h-12 rounded-2xl border-2 ${errors.email ? "border-destructive" : "border-border focus:border-primary"}`}
               />
               {errors.email && (
                 <p className="text-xs text-destructive">{errors.email}</p>
@@ -163,7 +165,7 @@ export default function Auth() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Contraseña</Label>
+              <Label htmlFor="password" className="text-sm font-medium">Contraseña</Label>
               <div className="relative">
                 <Input
                   id="password"
@@ -171,12 +173,12 @@ export default function Auth() {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className={`h-12 rounded-xl pr-10 ${errors.password ? "border-destructive" : ""}`}
+                  className={`h-12 rounded-2xl border-2 pr-12 ${errors.password ? "border-destructive" : "border-border focus:border-primary"}`}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
@@ -190,7 +192,7 @@ export default function Auth() {
               <div className="text-right">
                 <Link
                   to="/recuperar"
-                  className="text-sm text-primary hover:underline"
+                  className="text-sm text-primary hover:underline font-medium"
                 >
                   ¿Olvidaste tu contraseña?
                 </Link>
@@ -212,19 +214,22 @@ export default function Auth() {
               ) : mode === "login" ? (
                 "Iniciar sesión"
               ) : (
-                "Crear cuenta gratis"
+                <>
+                  Crear cuenta gratis
+                  <Sparkles className="h-4 w-4" />
+                </>
               )}
             </Button>
           </form>
 
           {/* Toggle mode */}
-          <p className="mt-6 text-center text-sm text-muted-foreground">
+          <p className="mt-8 text-center text-sm text-muted-foreground">
             {mode === "login" ? (
               <>
                 ¿No tienes cuenta?{" "}
                 <button
                   onClick={() => setMode("signup")}
-                  className="text-primary font-medium hover:underline"
+                  className="text-primary font-semibold hover:underline"
                 >
                   Regístrate gratis
                 </button>
@@ -234,7 +239,7 @@ export default function Auth() {
                 ¿Ya tienes cuenta?{" "}
                 <button
                   onClick={() => setMode("login")}
-                  className="text-primary font-medium hover:underline"
+                  className="text-primary font-semibold hover:underline"
                 >
                   Inicia sesión
                 </button>
@@ -245,23 +250,38 @@ export default function Auth() {
       </div>
 
       {/* Right side - Decorative */}
-      <div className="hidden lg:flex flex-1 items-center justify-center bg-gradient-to-br from-primary/5 via-secondary/5 to-primary/10 relative overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-20 right-20 w-64 h-64 bg-primary/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 left-20 w-80 h-80 bg-secondary/20 rounded-full blur-3xl" />
+      <div className="hidden lg:flex flex-1 items-center justify-center relative overflow-hidden">
+        {/* Animated gradient background */}
+        <div className="absolute inset-0 animated-gradient" />
+        
+        {/* Decorative blobs */}
+        <div className="absolute top-20 right-20 w-64 h-64 bg-primary/30 rounded-full blur-3xl blob" />
+        <div className="absolute bottom-20 left-20 w-80 h-80 bg-secondary/30 rounded-full blur-3xl blob" style={{ animationDelay: '-4s' }} />
         
         <div className="relative z-10 text-center px-12">
-          <div className="mb-8 inline-flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-primary to-secondary shadow-premium-xl">
-            <Sparkles className="h-10 w-10 text-primary-foreground" />
+          <div className="mb-8 inline-flex h-24 w-24 items-center justify-center rounded-3xl bg-gradient-to-br from-primary to-secondary shadow-friendly-lg">
+            <Sparkles className="h-12 w-12 text-white" />
           </div>
-          <h2 className="text-3xl font-bold mb-4">
+          <h2 className="text-4xl font-bold mb-4 text-foreground">
             Tus finanzas,
             <br />
-            claras y simples
+            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              claras y simples
+            </span>
           </h2>
-          <p className="text-muted-foreground max-w-sm mx-auto">
+          <p className="text-muted-foreground max-w-sm mx-auto mb-8 font-body">
             Únete a +500 emprendedores que ya conocen sus números y toman mejores decisiones cada día.
           </p>
+          
+          {/* Features list */}
+          <div className="flex flex-col gap-3 text-left max-w-xs mx-auto">
+            {["Dashboard intuitivo", "Reportes automáticos", "Alertas inteligentes"].map((feature, i) => (
+              <div key={i} className="flex items-center gap-3 bg-white/50 backdrop-blur-sm rounded-full px-4 py-2">
+                <CheckCircle2 className="h-5 w-5 text-success" />
+                <span className="text-sm font-medium text-foreground">{feature}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
