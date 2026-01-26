@@ -1,114 +1,114 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { Star, Quote, ArrowRight } from "lucide-react";
+
+const testimonials = [
+  {
+    quote: "Antes terminaba el mes sin saber si había ganado o perdido. Ahora lo veo en segundos.",
+    author: "María González",
+    role: "Dueña de Cafetería",
+    avatar: "MG",
+    rating: 5,
+  },
+  {
+    quote: "Las alertas me salvaron de un mes catastrófico. Vi a tiempo que estaba gastando de más.",
+    author: "Roberto Sánchez",
+    role: "Food Truck",
+    avatar: "RS",
+    rating: 5,
+  },
+  {
+    quote: "Por fin entiendo mis números sin necesidad de contratar un contador cada mes.",
+    author: "Ana Martínez",
+    role: "Tienda Online",
+    avatar: "AM",
+    rating: 5,
+  },
+];
 
 export function Testimonial() {
   const [mounted, setMounted] = useState(false);
-  const imageRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     setMounted(true);
-    if (imageRef.current) {
-      gsap.from(imageRef.current, {
-        opacity: 0,
-        x: -30,
-        duration: 1,
-        ease: "power2.out",
-        delay: 0.2
-      });
-    }
   }, []);
 
   return (
-    <section className="py-20 md:py-32 px-4 md:px-6 w-full bg-background">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row gap-12 md:gap-24 items-center">
-          
-          {/* Left - Image with Report Preview */}
-          <div className="w-full md:w-1/2" ref={imageRef}>
-            <div className="aspect-[4/3] relative w-full bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl overflow-hidden border-2 border-foreground/20 p-6">
-              {/* Simulated Report Preview */}
-              <div className="h-full flex flex-col gap-4">
-                {/* Header */}
-                <div className="flex items-center justify-between pb-4 border-b border-foreground/10">
-                  <div>
-                    <h3 className="font-sans font-medium text-lg text-foreground">Reporte Mensual</h3>
-                    <p className="font-mono text-xs text-foreground/60 mt-1">Enero 2025</p>
-                  </div>
-                  <div className="px-3 py-1 bg-foreground text-background rounded font-mono text-xs">
-                    PDF
-                  </div>
+    <section ref={sectionRef} className="py-20 md:py-32 px-4 md:px-6 w-full bg-background relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-accent/30 to-background" />
+      
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-secondary/10 rounded-full mb-6">
+            <Star className="h-4 w-4 text-secondary fill-secondary" />
+            <span className="text-sm font-medium text-foreground/80">Lo que dicen nuestros usuarios</span>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold leading-tight tracking-tight mb-4">
+            Emprendedores como tú
+            <br />
+            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              ya confían en nosotros
+            </span>
+          </h2>
+        </div>
+
+        {/* Testimonials Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {testimonials.map((testimonial, index) => (
+            <div
+              key={index}
+              className="group relative bg-white/90 backdrop-blur-sm rounded-3xl p-8 border border-border/50 hover:border-primary/30 shadow-card hover:shadow-card-hover transition-all duration-500 hover:-translate-y-1"
+              style={{
+                opacity: mounted ? 1 : 0,
+                transform: mounted ? "translateY(0)" : "translateY(30px)",
+                transition: `all 0.5s ease-out ${index * 0.15}s`,
+              }}
+            >
+              {/* Quote icon */}
+              <div className="absolute -top-3 -left-2">
+                <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-friendly">
+                  <Quote className="h-5 w-5 text-white" />
                 </div>
+              </div>
 
-                {/* Report Content */}
-                <div className="flex-1 bg-white rounded-lg p-4 border border-foreground/10 space-y-4">
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className="font-mono text-xs text-foreground/60">Ingresos Totales</span>
-                      <span className="font-sans font-medium tabular-nums">${mounted ? "45,200" : "0"}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="font-mono text-xs text-foreground/60">Gastos Totales</span>
-                      <span className="font-sans font-medium tabular-nums text-destructive">${mounted ? "28,500" : "0"}</span>
-                    </div>
-                    <div className="h-px bg-foreground/10 my-2"></div>
-                    <div className="flex justify-between items-center">
-                      <span className="font-mono text-sm font-medium">Utilidad Neta</span>
-                      <span className="font-sans text-lg font-bold text-success tabular-nums">${mounted ? "16,700" : "0"}</span>
-                    </div>
-                  </div>
+              {/* Rating */}
+              <div className="flex gap-1 mb-4 pt-4">
+                {Array.from({ length: testimonial.rating }).map((_, i) => (
+                  <Star key={i} className="h-5 w-5 text-warning fill-warning" />
+                ))}
+              </div>
 
-                  <div className="pt-4 border-t border-foreground/10">
-                    <p className="font-mono text-xs text-foreground/60 mb-3">Distribución de Gastos</p>
-                    <div className="space-y-2">
-                      {[
-                        { name: "Operativos", percent: 45, color: "bg-blue-500" },
-                        { name: "Marketing", percent: 30, color: "bg-purple-500" },
-                        { name: "Administración", percent: 25, color: "bg-orange-500" }
-                      ].map((item, i) => (
-                        <div key={i} className="flex items-center gap-3">
-                          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color.replace('bg-', '') }}></div>
-                          <div className="flex-1">
-                            <div className="flex justify-between mb-1">
-                              <span className="font-mono text-xs text-foreground/80">{item.name}</span>
-                              <span className="font-mono text-xs text-foreground/60">{item.percent}%</span>
-                            </div>
-                            <div className="h-1.5 bg-foreground/5 rounded-full overflow-hidden">
-                              <div 
-                                className={`h-full ${item.color} rounded-full transition-all`}
-                                style={{ width: mounted ? `${item.percent}%` : "0%" }}
-                              ></div>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+              {/* Quote */}
+              <p className="font-body text-foreground/90 mb-6 leading-relaxed text-lg">
+                "{testimonial.quote}"
+              </p>
 
-                  <div className="pt-4 border-t border-foreground/10">
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-xs text-foreground/60">Margen Neto</span>
-                      <span className="font-sans text-xl font-bold text-success">37%</span>
-                    </div>
-                  </div>
+              {/* Author */}
+              <div className="flex items-center gap-4">
+                <div className="h-12 w-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-semibold shadow-friendly">
+                  {testimonial.avatar}
+                </div>
+                <div>
+                  <p className="font-semibold text-foreground">{testimonial.author}</p>
+                  <p className="text-sm text-muted-foreground">{testimonial.role}</p>
                 </div>
               </div>
             </div>
-          </div>
+          ))}
+        </div>
 
-          {/* Right - Content */}
-          <div className="w-full md:w-1/2">
-            <h3 className="font-sans font-medium text-2xl md:text-3xl mb-6 tracking-tight">
-              Por qué Tu Negocio eligió Prisma
-            </h3>
-            <p className="font-serif text-lg md:text-xl text-foreground/80 leading-relaxed mb-6">
-              Prisma simplificó nuestros flujos financieros, resultando en decisiones más rápidas, menos hojas de cálculo y 34% más cobertura de datos.
-            </p>
-            <button className="bg-foreground text-background hover:bg-foreground/90 rounded-none px-8 h-12 text-base font-mono border-2 border-foreground flex items-center justify-center gap-2.5 transition-all hover:scale-[1.02]">
-              <div className="w-1 h-1 bg-background rounded-full"></div>
-              Leer caso de estudio
-            </button>
-          </div>
-
+        {/* CTA */}
+        <div className="text-center mt-12">
+          <a 
+            href="/auth"
+            className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all"
+          >
+            <span>Únete a ellos</span>
+            <ArrowRight className="h-4 w-4" />
+          </a>
         </div>
       </div>
     </section>

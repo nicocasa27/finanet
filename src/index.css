@@ -1,142 +1,142 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* 
-  PRISMA FINANZAS - Diseño inspirado en Kyriakos UI pero con colores originales
+  FINANET - Estilo amigable y accesible con paleta morado/rosa
 */
 
 @layer base {
   :root {
-    /* Fondos - Blanco/Beige claro estilo Aetherfield */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
+    /* Fondos - Blanco rosado suave */
+    --background: 300 20% 99%;
+    --foreground: 270 50% 15%;
 
     /* Cards y superficies */
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 0%;
+    --card-foreground: 270 50% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
+    --popover-foreground: 270 50% 15%;
 
-    /* Primario - Negro para botones y elementos principales */
-    --primary: 0 0% 0%;
+    /* Primario - Morado vibrante */
+    --primary: 262 83% 58%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secundario - Azul claro para gradientes */
-    --secondary: 200 100% 85%;
-    --secondary-foreground: 0 0% 0%;
+    /* Secundario - Rosa coral */
+    --secondary: 330 81% 60%;
+    --secondary-foreground: 0 0% 100%;
 
-    /* Muted - Beige claro */
-    --muted: 45 20% 96%;
-    --muted-foreground: 0 0% 40%;
+    /* Muted - Rosa muy claro */
+    --muted: 320 30% 96%;
+    --muted-foreground: 270 20% 45%;
 
-    /* Accent - Amarillo vibrante estilo Aetherfield */
-    --accent: 48 100% 50%;
-    --accent-foreground: 0 0% 0%;
+    /* Accent - Rosa claro */
+    --accent: 320 100% 96%;
+    --accent-foreground: 270 50% 15%;
 
-    /* Destructive - Rojo para alertas */
-    --destructive: 0 84% 60%;
+    /* Destructive - Rojo suave */
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Success - Verde para ganancias */
-    --success: 142 76% 36%;
+    /* Success - Verde menta */
+    --success: 160 84% 39%;
     --success-foreground: 0 0% 100%;
 
-    /* Warning - Amarillo para advertencias */
-    --warning: 48 100% 50%;
-    --warning-foreground: 0 0% 0%;
+    /* Warning - Naranja suave */
+    --warning: 32 95% 54%;
+    --warning-foreground: 0 0% 100%;
 
-    /* Bordes e inputs - Negro grueso estilo Aetherfield */
-    --border: 0 0% 0%;
-    --input: 0 0% 90%;
-    --ring: 0 0% 0%;
+    /* Bordes e inputs - Suaves y redondeados */
+    --border: 270 20% 90%;
+    --input: 270 20% 94%;
+    --ring: 262 83% 58%;
 
-    /* Radius premium */
+    /* Radius amigable - más redondeado */
     --radius: 1rem;
-    --radius-lg: 1.25rem;
-    --radius-xl: 1.5rem;
+    --radius-lg: 1.5rem;
+    --radius-xl: 2rem;
 
     /* Sidebar */
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 222 47% 11%;
-    --sidebar-primary: 239 84% 67%;
+    --sidebar-foreground: 270 50% 15%;
+    --sidebar-primary: 262 83% 58%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 20% 96%;
-    --sidebar-accent-foreground: 222 47% 11%;
-    --sidebar-border: 214 32% 91%;
-    --sidebar-ring: 239 84% 67%;
+    --sidebar-accent: 320 100% 96%;
+    --sidebar-accent-foreground: 270 50% 15%;
+    --sidebar-border: 270 20% 92%;
+    --sidebar-ring: 262 83% 58%;
 
-    /* Gradientes premium */
-    --gradient-primary: linear-gradient(135deg, hsl(239 84% 67%) 0%, hsl(217 91% 60%) 100%);
-    --gradient-hero: linear-gradient(180deg, hsl(210 20% 99%) 0%, hsl(210 40% 96%) 100%);
-    --gradient-glass: linear-gradient(135deg, hsla(0, 0%, 100%, 0.9) 0%, hsla(0, 0%, 100%, 0.7) 100%);
-    --gradient-success: linear-gradient(135deg, hsl(142 76% 36%) 0%, hsl(158 64% 52%) 100%);
-    --gradient-danger: linear-gradient(135deg, hsl(0 84% 60%) 0%, hsl(25 95% 53%) 100%);
+    /* Gradientes Finanet */
+    --gradient-primary: linear-gradient(135deg, hsl(262 83% 58%) 0%, hsl(330 81% 60%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(262 83% 95%) 0%, hsl(330 81% 95%) 50%, hsl(300 20% 99%) 100%);
+    --gradient-glass: linear-gradient(135deg, hsla(0, 0%, 100%, 0.95) 0%, hsla(320, 100%, 99%, 0.9) 100%);
+    --gradient-success: linear-gradient(135deg, hsl(160 84% 39%) 0%, hsl(172 66% 50%) 100%);
+    --gradient-danger: linear-gradient(135deg, hsl(0 72% 51%) 0%, hsl(25 95% 53%) 100%);
 
-    /* Sombras premium - suaves y difusas */
-    --shadow-sm: 0 1px 2px 0 hsla(222, 47%, 11%, 0.03), 0 1px 3px 0 hsla(222, 47%, 11%, 0.05);
-    --shadow-md: 0 4px 6px -1px hsla(222, 47%, 11%, 0.05), 0 2px 4px -2px hsla(222, 47%, 11%, 0.05);
-    --shadow-lg: 0 10px 15px -3px hsla(222, 47%, 11%, 0.06), 0 4px 6px -4px hsla(222, 47%, 11%, 0.05);
-    --shadow-xl: 0 20px 25px -5px hsla(222, 47%, 11%, 0.08), 0 8px 10px -6px hsla(222, 47%, 11%, 0.05);
-    --shadow-glow: 0 0 30px -5px hsla(239, 84%, 67%, 0.25);
-    --shadow-card: 0 1px 3px 0 hsla(222, 47%, 11%, 0.04), 0 1px 2px -1px hsla(222, 47%, 11%, 0.04);
-    --shadow-card-hover: 0 10px 40px -10px hsla(222, 47%, 11%, 0.12);
+    /* Sombras suaves y amigables */
+    --shadow-sm: 0 2px 8px -2px hsla(262, 83%, 58%, 0.08);
+    --shadow-md: 0 8px 24px -4px hsla(262, 83%, 58%, 0.12);
+    --shadow-lg: 0 16px 40px -8px hsla(262, 83%, 58%, 0.15);
+    --shadow-xl: 0 24px 48px -12px hsla(262, 83%, 58%, 0.18);
+    --shadow-glow: 0 0 40px -10px hsla(262, 83%, 58%, 0.4);
+    --shadow-card: 0 4px 16px -4px hsla(262, 83%, 58%, 0.08);
+    --shadow-card-hover: 0 20px 50px -15px hsla(262, 83%, 58%, 0.2);
 
     /* Glassmorphism */
-    --glass-bg: hsla(0, 0%, 100%, 0.8);
-    --glass-border: hsla(0, 0%, 100%, 0.5);
-    --glass-blur: 12px;
+    --glass-bg: hsla(0, 0%, 100%, 0.85);
+    --glass-border: hsla(262, 83%, 58%, 0.1);
+    --glass-blur: 16px;
   }
 
   .dark {
-    --background: 222 47% 6%;
-    --foreground: 210 40% 98%;
+    --background: 270 50% 6%;
+    --foreground: 300 20% 98%;
 
-    --card: 222 47% 8%;
-    --card-foreground: 210 40% 98%;
+    --card: 270 40% 10%;
+    --card-foreground: 300 20% 98%;
 
-    --popover: 222 47% 8%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 270 40% 10%;
+    --popover-foreground: 300 20% 98%;
 
-    --primary: 239 84% 67%;
+    --primary: 262 83% 65%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 217 91% 60%;
+    --secondary: 330 81% 65%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 270 30% 15%;
+    --muted-foreground: 270 15% 65%;
 
-    --accent: 217 33% 17%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 270 30% 20%;
+    --accent-foreground: 300 20% 98%;
 
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 63% 45%;
+    --destructive-foreground: 300 20% 98%;
 
-    --success: 142 76% 36%;
+    --success: 160 84% 45%;
     --success-foreground: 0 0% 100%;
 
-    --warning: 38 92% 50%;
+    --warning: 32 95% 50%;
     --warning-foreground: 0 0% 100%;
 
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 239 84% 67%;
+    --border: 270 30% 20%;
+    --input: 270 30% 18%;
+    --ring: 262 83% 65%;
 
-    --sidebar-background: 222 47% 8%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 239 84% 67%;
+    --sidebar-background: 270 40% 8%;
+    --sidebar-foreground: 300 20% 98%;
+    --sidebar-primary: 262 83% 65%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 217 33% 17%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217 33% 17%;
-    --sidebar-ring: 239 84% 67%;
+    --sidebar-accent: 270 30% 20%;
+    --sidebar-accent-foreground: 300 20% 98%;
+    --sidebar-border: 270 30% 20%;
+    --sidebar-ring: 262 83% 65%;
 
-    --glass-bg: hsla(222, 47%, 8%, 0.8);
-    --glass-border: hsla(0, 0%, 100%, 0.1);
+    --glass-bg: hsla(270, 40%, 10%, 0.85);
+    --glass-border: hsla(262, 83%, 58%, 0.15);
   }
 }
 
@@ -164,6 +164,65 @@
 }
 
 @layer components {
+  /* Card styles amigables */
+  .card-friendly {
+    @apply bg-card rounded-3xl border border-border/50 shadow-card transition-all duration-300;
+  }
+
+  .card-friendly:hover {
+    @apply shadow-card-hover -translate-y-1;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glow effects */
+  .glow-primary {
+    box-shadow: 0 0 60px -15px hsla(262, 83%, 58%, 0.5);
+  }
+
+  .glow-secondary {
+    box-shadow: 0 0 60px -15px hsla(330, 81%, 60%, 0.5);
+  }
+
+  /* Animated gradient background */
+  .animated-gradient {
+    background: linear-gradient(
+      135deg,
+      hsl(262 83% 95%),
+      hsl(330 81% 95%),
+      hsl(262 83% 93%),
+      hsl(320 100% 96%)
+    );
+    background-size: 400% 400%;
+    animation: gradient-shift 8s ease infinite;
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  /* Pill button style */
+  .btn-pill {
+    @apply rounded-full px-6 py-3 font-medium transition-all duration-300;
+  }
+
+  /* Hover scale effect */
+  .hover-lift {
+    @apply transition-all duration-300;
+  }
+
+  .hover-lift:hover {
+    @apply -translate-y-1 shadow-lg;
+  }
+
+  /* Magnetic button */
   .magnetic-btn {
     display: inline-block;
     will-change: transform;
@@ -181,7 +240,7 @@
     position: absolute;
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, hsla(239, 84%, 67%, 0.15) 0%, rgba(255,255,255,0) 70%);
+    background: radial-gradient(circle, hsla(262, 83%, 58%, 0.2) 0%, rgba(255,255,255,0) 70%);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -203,5 +262,26 @@
   @keyframes marquee {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
+  }
+
+  /* Floating animation */
+  .float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* Blob shapes */
+  .blob {
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    animation: blob-morph 8s ease-in-out infinite;
+  }
+
+  @keyframes blob-morph {
+    0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+    50% { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; }
   }
 }
