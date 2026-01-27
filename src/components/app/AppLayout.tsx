@@ -2,11 +2,11 @@ import { ReactNode, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { 
   LayoutDashboard, 
-  ArrowLeftRight, 
-  FileText, 
+  Package, 
+  Package2, 
+  Calculator, 
   TrendingUp, 
-  Tag, 
-  LineChart, 
+  FileText, 
   CreditCard, 
   Settings,
   ChevronLeft,
@@ -20,8 +20,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { cn } from "@/lib/utils";
 import { BusinessSelector } from "./BusinessSelector";
-import { AddTransactionModal } from "./AddTransactionModal";
-import { DateRangePicker } from "./DateRangePicker";
+import { AddProductModal } from "./AddProductModal";
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -29,18 +28,18 @@ interface AppLayoutProps {
 
 const menuItems = [
   { name: "Dashboard", icon: LayoutDashboard, path: "/app" },
-  { name: "Transacciones", icon: ArrowLeftRight, path: "/app/transacciones" },
+  { name: "Mis Productos", icon: Package, path: "/app/productos" },
+  { name: "Insumos", icon: Package2, path: "/app/insumos" },
+  { name: "Calculadora", icon: Calculator, path: "/app/calculadora" },
+  { name: "Simulador", icon: TrendingUp, path: "/app/simulador" },
   { name: "Reportes", icon: FileText, path: "/app/reportes" },
-  { name: "Indicadores", icon: TrendingUp, path: "/app/indicadores" },
-  { name: "Categorías", icon: Tag, path: "/app/categorias" },
-  { name: "Proyecciones", icon: LineChart, path: "/app/proyecciones" },
   { name: "Suscripción", icon: CreditCard, path: "/app/suscripcion" },
   { name: "Ajustes", icon: Settings, path: "/app/ajustes" },
 ];
 
 export function AppLayout({ children }: AppLayoutProps) {
   const [collapsed, setCollapsed] = useState(false);
-  const [isAddTransactionOpen, setIsAddTransactionOpen] = useState(false);
+  const [isAddProductOpen, setIsAddProductOpen] = useState(false);
   const location = useLocation();
   const { user, signOut } = useAuth();
 
@@ -139,9 +138,6 @@ export function AppLayout({ children }: AppLayoutProps) {
             <div className="flex items-center gap-4">
               {/* Business selector */}
               <BusinessSelector />
-
-              {/* Date range picker */}
-              <DateRangePicker />
             </div>
 
             <div className="flex items-center gap-3">
@@ -150,9 +146,9 @@ export function AppLayout({ children }: AppLayoutProps) {
                 <Bell className="h-5 w-5 text-muted-foreground" />
               </button>
               
-              <Button variant="hero" size="default" onClick={() => setIsAddTransactionOpen(true)}>
+              <Button variant="hero" size="default" onClick={() => setIsAddProductOpen(true)}>
                 <Plus className="h-4 w-4" />
-                {!collapsed && "Agregar movimiento"}
+                {!collapsed && "Nuevo producto"}
               </Button>
             </div>
           </div>
@@ -164,10 +160,10 @@ export function AppLayout({ children }: AppLayoutProps) {
         </main>
       </div>
 
-      {/* Global Add Transaction Modal */}
-      <AddTransactionModal
-        open={isAddTransactionOpen}
-        onOpenChange={setIsAddTransactionOpen}
+      {/* Global Add Product Modal */}
+      <AddProductModal
+        open={isAddProductOpen}
+        onOpenChange={setIsAddProductOpen}
       />
     </div>
   );

@@ -1,79 +1,40 @@
+import { Link } from "react-router-dom";
 import { 
+  Package, 
   TrendingUp, 
-  TrendingDown, 
-  DollarSign, 
-  Percent, 
   AlertTriangle,
-  ArrowUpRight,
-  ArrowDownRight,
-  Loader2
+  ArrowRight,
+  Calculator,
+  Loader2,
+  Plus
 } from "lucide-react";
-import { 
-  AreaChart, 
-  Area, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell
-} from "recharts";
-import { useDashboardData } from "@/hooks/useDashboardData";
+import { Button } from "@/components/ui/button";
+import { useCosteoData } from "@/hooks/useCosteoData";
 import { useBusiness } from "@/contexts/BusinessContext";
+import { ProductCard } from "@/components/app/ProductCard";
+import { useState } from "react";
+import { AddProductModal } from "@/components/app/AddProductModal";
+import { ProductDetailModal } from "@/components/app/ProductDetailModal";
+import { ProductWithCosts } from "@/hooks/useProducts";
 
 export default function Dashboard() {
   const { activeBusiness } = useBusiness();
-  const { loading, kpis, chartData, categoryBreakdown, alerts, projections, hasData } = useDashboardData();
+  const { 
+    loading, 
+    products, 
+    totalProducts, 
+    averageMargin, 
+    bestProduct, 
+    lowMarginProducts,
+    totalIngredients 
+  } = useCosteoData();
+  
+  const [isAddOpen, setIsAddOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<ProductWithCosts | null>(null);
 
   const formatCurrency = (value: number) => {
     return `$${value.toLocaleString('es-MX', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
   };
-
-  const formatPercent = (value: number, showSign = true) => {
-    const sign = showSign && value > 0 ? '+' : '';
-    return `${sign}${value.toFixed(1)}%`;
-  };
-
-  const kpiCards = [
-    {
-      title: "Ingresos del mes",
-      value: formatCurrency(kpis.income),
-      change: formatPercent(kpis.incomeChange),
-      trend: kpis.incomeChange >= 0 ? "up" : "down",
-      icon: TrendingUp,
-      colorClass: "text-success",
-      bgClass: "bg-success/10",
-    },
-    {
-      title: "Gastos del mes",
-      value: formatCurrency(kpis.expense),
-      change: formatPercent(kpis.expenseChange),
-      trend: kpis.expenseChange <= 0 ? "up" : "down",
-      icon: TrendingDown,
-      colorClass: "text-destructive",
-      bgClass: "bg-destructive/10",
-    },
-    {
-      title: "Utilidad neta",
-      value: formatCurrency(kpis.profit),
-      change: formatPercent(kpis.profitChange),
-      trend: kpis.profitChange >= 0 ? "up" : "down",
-      icon: DollarSign,
-      colorClass: kpis.profit >= 0 ? "text-primary" : "text-destructive",
-      bgClass: kpis.profit >= 0 ? "bg-primary/10" : "bg-destructive/10",
-    },
-    {
-      title: "Margen neto",
-      value: formatPercent(kpis.margin, false),
-      change: formatPercent(kpis.marginChange),
-      trend: kpis.marginChange >= 0 ? "up" : "down",
-      icon: Percent,
-      colorClass: "text-secondary",
-      bgClass: "bg-secondary/10",
-    },
-  ];
 
   if (loading) {
     return (
@@ -83,17 +44,50 @@ export default function Dashboard() {
     );
   }
 
+  const kpiCards = [
+    {
+      title: "Productos",
+      value: totalProducts.toString(),
+      icon: Package,
+      colorClass: "text-primary",
+      bgClass: "bg-primary/10",
+    },
+    {
+      title: "Margen promedio",
+      value: `${averageMargin.toFixed(1)}%`,
+      icon: TrendingUp,
+      colorClass: averageMargin >= 30 ? "text-success" : averageMargin >= 20 ? "text-warning" : "text-destructive",
+      bgClass: averageMargin >= 30 ? "bg-success/10" : averageMargin >= 20 ? "bg-warning/10" : "bg-destructive/10",
+    },
+    {
+      title: "Producto estrella",
+      value: bestProduct?.name || "—",
+      subtitle: bestProduct ? `${bestProduct.marginPercent.toFixed(1)}% margen` : undefined,
+      icon: TrendingUp,
+      colorClass: "text-secondary",
+      bgClass: "bg-secondary/10",
+    },
+    {
+      title: "Alertas",
+      value: lowMarginProducts.length.toString(),
+      subtitle: lowMarginProducts.length > 0 ? "productos con margen bajo" : "todo bien",
+      icon: AlertTriangle,
+      colorClass: lowMarginProducts.length > 0 ? "text-warning" : "text-success",
+      bgClass: lowMarginProducts.length > 0 ? "bg-warning/10" : "bg-success/10",
+    },
+  ];
+
   return (
     <div className="space-y-6">
       {/* Page header */}
       <div>
-        <h1 className="text-2xl font-bold">Dashboard</h1>
+        <h1 className="text-2xl font-bold">Dashboard de Costeo</h1>
         <p className="text-muted-foreground">
-          Resumen financiero de {activeBusiness?.name || 'tu negocio'}
+          Tu emprendimiento: {activeBusiness?.name || 'Selecciona un negocio'}
         </p>
       </div>
 
-      {/* KPI Cards - Bento grid */}
+      {/* KPI Cards */}
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
         {kpiCards.map((kpi, index) => (
           <div
@@ -104,244 +98,135 @@ export default function Dashboard() {
               <div className={`h-10 w-10 rounded-xl ${kpi.bgClass} flex items-center justify-center`}>
                 <kpi.icon className={`h-5 w-5 ${kpi.colorClass}`} />
               </div>
-              {hasData && (
-                <div className={`flex items-center gap-1 text-xs font-medium ${
-                  kpi.trend === "up" ? "text-success" : "text-destructive"
-                }`}>
-                  {kpi.trend === "up" ? (
-                    <ArrowUpRight className="h-3 w-3" />
-                  ) : (
-                    <ArrowDownRight className="h-3 w-3" />
-                  )}
-                  {kpi.change}
-                </div>
-              )}
             </div>
-            <p className="text-2xl font-bold">{kpi.value}</p>
+            <p className="text-2xl font-bold truncate">{kpi.value}</p>
             <p className="text-sm text-muted-foreground">{kpi.title}</p>
+            {kpi.subtitle && (
+              <p className="text-xs text-muted-foreground mt-1">{kpi.subtitle}</p>
+            )}
           </div>
         ))}
       </div>
 
-      {/* Main charts row */}
-      <div className="grid gap-4 lg:grid-cols-3">
-        {/* Income vs Expenses Chart */}
-        <div className="lg:col-span-2 bg-card rounded-2xl p-6 border border-border/50">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h3 className="font-semibold">Ingresos vs Gastos</h3>
-              <p className="text-sm text-muted-foreground">Por semana</p>
-            </div>
-            <div className="flex items-center gap-4 text-sm">
-              <div className="flex items-center gap-2">
-                <div className="h-3 w-3 rounded-full bg-primary" />
-                <span className="text-muted-foreground">Ingresos</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="h-3 w-3 rounded-full bg-destructive" />
-                <span className="text-muted-foreground">Gastos</span>
-              </div>
-            </div>
+      {/* Products Section */}
+      {products.length > 0 ? (
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-semibold">Mis Productos</h2>
+            <Link to="/app/productos">
+              <Button variant="ghost" size="sm">
+                Ver todos
+                <ArrowRight className="h-4 w-4 ml-1" />
+              </Button>
+            </Link>
           </div>
-          <div className="h-72">
-            {chartData.length > 0 ? (
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={chartData}>
-                  <defs>
-                    <linearGradient id="incomeGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="hsl(239, 84%, 67%)" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="hsl(239, 84%, 67%)" stopOpacity={0}/>
-                    </linearGradient>
-                    <linearGradient id="expenseGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="hsl(0, 84%, 60%)" stopOpacity={0.2}/>
-                      <stop offset="95%" stopColor="hsl(0, 84%, 60%)" stopOpacity={0}/>
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis 
-                    dataKey="name" 
-                    axisLine={false} 
-                    tickLine={false}
-                    tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
-                  />
-                  <YAxis 
-                    axisLine={false} 
-                    tickLine={false}
-                    tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
-                    tickFormatter={(value) => `$${value / 1000}k`}
-                  />
-                  <Tooltip 
-                    contentStyle={{
-                      backgroundColor: 'hsl(var(--card))',
-                      border: '1px solid hsl(var(--border))',
-                      borderRadius: '12px',
-                      boxShadow: 'var(--shadow-lg)',
-                    }}
-                    formatter={(value: number) => [`$${value.toLocaleString()}`, '']}
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="ingresos"
-                    stroke="hsl(239, 84%, 67%)"
-                    strokeWidth={2}
-                    fill="url(#incomeGradient)"
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="gastos"
-                    stroke="hsl(0, 84%, 60%)"
-                    strokeWidth={2}
-                    fill="url(#expenseGradient)"
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            ) : (
-              <div className="h-full flex items-center justify-center text-muted-foreground">
-                <p>Registra movimientos para ver la gráfica</p>
-              </div>
-            )}
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {products.slice(0, 4).map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onEdit={() => {}}
+                onDelete={() => {}}
+                onClick={(p) => setSelectedProduct(p)}
+              />
+            ))}
           </div>
         </div>
-
-        {/* Categories breakdown */}
-        <div className="bg-card rounded-2xl p-6 border border-border/50">
-          <div className="mb-6">
-            <h3 className="font-semibold">Top categorías de gasto</h3>
-            <p className="text-sm text-muted-foreground">Distribución del período</p>
+      ) : (
+        <div className="bg-card rounded-2xl p-8 border border-border/50 text-center">
+          <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+            <Package className="h-8 w-8 text-primary" />
           </div>
-          {categoryBreakdown.length > 0 ? (
-            <>
-              <div className="h-48 mb-4">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={categoryBreakdown}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={50}
-                      outerRadius={80}
-                      paddingAngle={2}
-                      dataKey="value"
-                    >
-                      {categoryBreakdown.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                      ))}
-                    </Pie>
-                    <Tooltip 
-                      contentStyle={{
-                        backgroundColor: 'hsl(var(--card))',
-                        border: '1px solid hsl(var(--border))',
-                        borderRadius: '12px',
-                      }}
-                      formatter={(value: number) => [`$${value.toLocaleString()}`, '']}
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-              <div className="space-y-2">
-                {categoryBreakdown.map((category, index) => (
-                  <div key={index} className="flex items-center justify-between text-sm">
-                    <div className="flex items-center gap-2">
-                      <div 
-                        className="h-3 w-3 rounded-full" 
-                        style={{ backgroundColor: category.color }}
-                      />
-                      <span className="text-muted-foreground">{category.name}</span>
-                    </div>
-                    <span className="font-medium">${category.value.toLocaleString()}</span>
-                  </div>
-                ))}
-              </div>
-            </>
-          ) : (
-            <div className="h-48 flex items-center justify-center text-muted-foreground">
-              <p className="text-center text-sm">Registra gastos para ver la distribución</p>
-            </div>
-          )}
+          <h3 className="text-lg font-semibold mb-2">¡Comienza a costear!</h3>
+          <p className="text-muted-foreground max-w-md mx-auto mb-6">
+            Crea tu primer producto para calcular su costo real y saber cuánto deberías cobrar
+          </p>
+          <Button onClick={() => setIsAddOpen(true)}>
+            <Plus className="h-4 w-4 mr-2" />
+            Crear mi primer producto
+          </Button>
         </div>
-      </div>
+      )}
 
-      {/* Alerts and projections row */}
+      {/* Quick Actions */}
       <div className="grid gap-4 lg:grid-cols-2">
-        {/* Alerts */}
-        <div className="bg-card rounded-2xl p-6 border border-border/50">
-          <div className="flex items-center gap-2 mb-4">
-            <AlertTriangle className="h-5 w-5 text-warning" />
-            <h3 className="font-semibold">Señales importantes</h3>
-          </div>
-          <div className="space-y-3">
-            {alerts.length > 0 ? (
-              alerts.map((alert, index) => (
+        {/* Low margin alerts */}
+        {lowMarginProducts.length > 0 && (
+          <div className="bg-card rounded-2xl p-6 border border-border/50">
+            <div className="flex items-center gap-2 mb-4">
+              <AlertTriangle className="h-5 w-5 text-warning" />
+              <h3 className="font-semibold">Productos con margen bajo</h3>
+            </div>
+            <div className="space-y-3">
+              {lowMarginProducts.slice(0, 3).map((product) => (
                 <div
-                  key={index}
-                  className={`flex items-start gap-3 p-3 rounded-xl ${
-                    alert.type === "warning" 
-                      ? "bg-warning/10 border border-warning/20" 
-                      : alert.type === "danger"
-                      ? "bg-destructive/10 border border-destructive/20"
-                      : "bg-success/10 border border-success/20"
-                  }`}
+                  key={product.id}
+                  className="flex items-center justify-between p-3 rounded-xl bg-warning/10 border border-warning/20 cursor-pointer hover:bg-warning/20 transition-colors"
+                  onClick={() => setSelectedProduct(product)}
                 >
-                  <div className={`h-2 w-2 rounded-full mt-1.5 ${
-                    alert.type === "warning" 
-                      ? "bg-warning" 
-                      : alert.type === "danger"
-                      ? "bg-destructive"
-                      : "bg-success"
-                  }`} />
-                  <p className="text-sm">{alert.message}</p>
+                  <div>
+                    <p className="font-medium text-sm">{product.name}</p>
+                    <p className="text-xs text-muted-foreground">
+                      Costo: {formatCurrency(product.totalCost)} → Precio: {formatCurrency(product.sale_price)}
+                    </p>
+                  </div>
+                  <span className="text-warning font-bold">
+                    {product.marginPercent.toFixed(1)}%
+                  </span>
                 </div>
-              ))
-            ) : (
-              <p className="text-sm text-muted-foreground">No hay alertas en este período</p>
-            )}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* Month-end projection */}
+        {/* Quick actions */}
         <div className="bg-card rounded-2xl p-6 border border-border/50">
-          <div className="mb-4">
-            <h3 className="font-semibold">Proyección fin de período</h3>
-            <p className="text-sm text-muted-foreground">
-              Basado en tendencias actuales ({projections.daysRemaining} días restantes)
-            </p>
+          <h3 className="font-semibold mb-4">Acciones rápidas</h3>
+          <div className="grid grid-cols-2 gap-3">
+            <Button 
+              variant="outline" 
+              className="h-auto py-4 flex-col gap-2"
+              onClick={() => setIsAddOpen(true)}
+            >
+              <Plus className="h-5 w-5" />
+              <span className="text-xs">Nuevo producto</span>
+            </Button>
+            <Link to="/app/calculadora">
+              <Button variant="outline" className="h-auto py-4 flex-col gap-2 w-full">
+                <Calculator className="h-5 w-5" />
+                <span className="text-xs">Calcular precio</span>
+              </Button>
+            </Link>
+            <Link to="/app/insumos">
+              <Button variant="outline" className="h-auto py-4 flex-col gap-2 w-full">
+                <Package className="h-5 w-5" />
+                <span className="text-xs">Ver insumos ({totalIngredients})</span>
+              </Button>
+            </Link>
+            <Link to="/app/simulador">
+              <Button variant="outline" className="h-auto py-4 flex-col gap-2 w-full">
+                <TrendingUp className="h-5 w-5" />
+                <span className="text-xs">Simular</span>
+              </Button>
+            </Link>
           </div>
-          <div className="grid grid-cols-3 gap-4">
-            <div className="text-center p-4 rounded-xl bg-muted/50">
-              <p className="text-2xl font-bold text-success">
-                {formatCurrency(projections.income)}
-              </p>
-              <p className="text-xs text-muted-foreground">Ingresos proyectados</p>
-            </div>
-            <div className="text-center p-4 rounded-xl bg-muted/50">
-              <p className="text-2xl font-bold text-destructive">
-                {formatCurrency(projections.expense)}
-              </p>
-              <p className="text-xs text-muted-foreground">Gastos proyectados</p>
-            </div>
-            <div className="text-center p-4 rounded-xl bg-muted/50">
-              <p className={`text-2xl font-bold ${projections.profit >= 0 ? 'text-primary' : 'text-destructive'}`}>
-                {formatCurrency(projections.profit)}
-              </p>
-              <p className="text-xs text-muted-foreground">Utilidad proyectada</p>
-            </div>
-          </div>
-          {projections.profit > 0 && hasData && (
-            <div className="mt-4 p-3 rounded-xl bg-success/10 border border-success/20">
-              <p className="text-sm text-success font-medium">
-                ✨ Vas en buen camino para cerrar en positivo
-              </p>
-            </div>
-          )}
-          {projections.profit < 0 && hasData && (
-            <div className="mt-4 p-3 rounded-xl bg-destructive/10 border border-destructive/20">
-              <p className="text-sm text-destructive font-medium">
-                ⚠️ Proyección indica cierre en negativo. Revisa tus gastos.
-              </p>
-            </div>
-          )}
         </div>
       </div>
+
+      {/* Modals */}
+      <AddProductModal
+        open={isAddOpen}
+        onOpenChange={setIsAddOpen}
+      />
+
+      {selectedProduct && (
+        <ProductDetailModal
+          open={!!selectedProduct}
+          onOpenChange={(open) => !open && setSelectedProduct(null)}
+          product={selectedProduct}
+        />
+      )}
     </div>
   );
 }

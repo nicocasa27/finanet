@@ -10,58 +10,55 @@ gsap.registerPlugin(ScrollTrigger);
 const plans = [
   {
     name: "Gratis",
-    description: "Para empezar a conocer tus números",
+    description: "Para proyectos de clase",
     priceMonthly: 0,
     priceYearly: 0,
     icon: Sparkles,
     features: [
-      "100 transacciones/mes",
-      "1 negocio",
+      "3 productos",
+      "10 insumos",
+      "Calculadora de precio",
       "Dashboard básico",
-      "Reportes del mes actual",
-      "Categorías predefinidas",
+      "1 emprendimiento",
     ],
     cta: "Comenzar gratis",
     popular: false,
     gradient: "from-muted to-muted",
   },
   {
-    name: "Pro",
-    description: "Para emprendedores serios",
-    priceMonthly: 199,
-    priceYearly: 1990,
+    name: "Estudiante",
+    description: "Para side hustles serios",
+    priceMonthly: 79,
+    priceYearly: 790,
     icon: Zap,
     features: [
-      "Transacciones ilimitadas",
-      "3 negocios",
-      "Dashboard completo",
-      "Reportes históricos",
-      "Categorías personalizadas",
-      "Exportar PDF/CSV",
-      "Indicadores avanzados",
-      "Proyecciones",
-      "Alertas inteligentes",
+      "Productos ilimitados",
+      "Insumos ilimitados",
+      "Simulador de escenarios",
+      "Exportar reportes PDF",
+      "3 emprendimientos",
+      "Historial completo",
+      "Soporte prioritario",
     ],
-    cta: "Comenzar Pro",
+    cta: "Comenzar Estudiante",
     popular: true,
     gradient: "from-primary to-secondary",
   },
   {
-    name: "Negocio",
-    description: "Para equipos y empresas",
-    priceMonthly: 499,
-    priceYearly: 4990,
+    name: "Pro",
+    description: "Cuando ya no seas estudiante",
+    priceMonthly: 199,
+    priceYearly: 1990,
     icon: Crown,
     features: [
-      "Todo en Pro",
-      "Negocios ilimitados",
-      "Usuarios del equipo",
-      "Roles y permisos",
-      "Soporte prioritario",
+      "Todo en Estudiante",
+      "Emprendimientos ilimitados",
+      "Colaboradores",
       "API access",
       "Reportes personalizados",
+      "Soporte dedicado",
     ],
-    cta: "Contactar ventas",
+    cta: "Comenzar Pro",
     popular: false,
     gradient: "from-foreground to-foreground/80",
   },
@@ -110,16 +107,16 @@ export function Pricing() {
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-6">
             <Zap className="h-4 w-4 text-primary" />
-            <span className="text-sm font-medium text-foreground/80">Precios transparentes</span>
+            <span className="text-sm font-medium text-foreground/80">Precios para estudiantes</span>
           </div>
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
             Planes simples,{" "}
             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              sin sorpresas
+              precios justos
             </span>
           </h2>
           <p className="text-lg text-muted-foreground font-body max-w-xl mx-auto">
-            Elige el plan que mejor se adapte a tu negocio
+            Empieza gratis y crece con tu emprendimiento
           </p>
         </div>
 
@@ -170,7 +167,7 @@ export function Pricing() {
 
               {/* Icon */}
               <div className={`h-14 w-14 rounded-2xl ${plan.popular ? 'bg-white/20' : 'bg-gradient-to-br ' + plan.gradient} flex items-center justify-center mb-6 shadow-friendly`}>
-                <plan.icon className={`h-7 w-7 ${plan.popular ? 'text-white' : plan.name === 'Negocio' ? 'text-white' : 'text-primary'}`} />
+                <plan.icon className={`h-7 w-7 ${plan.popular ? 'text-white' : plan.name === 'Pro' ? 'text-white' : 'text-primary'}`} />
               </div>
 
               {/* Plan name */}

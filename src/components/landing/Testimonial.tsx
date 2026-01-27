@@ -1,27 +1,26 @@
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
 import { Star, Quote, ArrowRight } from "lucide-react";
 
 const testimonials = [
   {
-    quote: "Antes terminaba el mes sin saber si había ganado o perdido. Ahora lo veo en segundos.",
-    author: "María González",
-    role: "Dueña de Cafetería",
-    avatar: "MG",
-    rating: 5,
-  },
-  {
-    quote: "Las alertas me salvaron de un mes catastrófico. Vi a tiempo que estaba gastando de más.",
-    author: "Roberto Sánchez",
-    role: "Food Truck",
-    avatar: "RS",
-    rating: 5,
-  },
-  {
-    quote: "Por fin entiendo mis números sin necesidad de contratar un contador cada mes.",
+    quote: "Estaba cobrando mis brownies muy baratos. Finanet me mostró que perdía dinero en cada venta.",
     author: "Ana Martínez",
-    role: "Tienda Online",
+    role: "Venta de repostería",
     avatar: "AM",
+    rating: 5,
+  },
+  {
+    quote: "Usé el reporte de costeo para mi proyecto de emprendimiento y saqué 10. Mis profes quedaron impresionados.",
+    author: "Carlos López",
+    role: "Estudiante de Negocios",
+    avatar: "CL",
+    rating: 5,
+  },
+  {
+    quote: "Por fin sé exactamente cuánto me cuesta cada producto. Ahora cobro lo justo y gano lo que merezco.",
+    author: "María González",
+    role: "Joyería artesanal",
+    avatar: "MG",
     rating: 5,
   },
 ];
@@ -44,10 +43,10 @@ export function Testimonial() {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-secondary/10 rounded-full mb-6">
             <Star className="h-4 w-4 text-secondary fill-secondary" />
-            <span className="text-sm font-medium text-foreground/80">Lo que dicen nuestros usuarios</span>
+            <span className="text-sm font-medium text-foreground/80">Lo que dicen otros estudiantes</span>
           </div>
           <h2 className="text-3xl md:text-5xl font-bold leading-tight tracking-tight mb-4">
-            Emprendedores como tú
+            Emprendedores universitarios
             <br />
             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
               ya confían en nosotros
