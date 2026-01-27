@@ -1,226 +1,156 @@
-import { useState, useEffect, useRef } from "react";
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Check, Sparkles, Zap, Crown } from "lucide-react";
+import { Check, Minus, ArrowRight } from "lucide-react";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const plans = [
-  {
-    name: "Gratis",
-    description: "Para proyectos de clase",
-    priceMonthly: 0,
-    priceYearly: 0,
-    icon: Sparkles,
-    features: [
-      "3 productos",
-      "10 insumos",
-      "Calculadora de precio",
-      "Dashboard básico",
-      "1 emprendimiento",
-    ],
-    cta: "Comenzar gratis",
-    popular: false,
-    gradient: "from-muted to-muted",
-  },
-  {
-    name: "Estudiante",
-    description: "Para side hustles serios",
-    priceMonthly: 79,
-    priceYearly: 790,
-    icon: Zap,
-    features: [
-      "Productos ilimitados",
-      "Insumos ilimitados",
-      "Simulador de escenarios",
-      "Exportar reportes PDF",
-      "3 emprendimientos",
-      "Historial completo",
-      "Soporte prioritario",
-    ],
-    cta: "Comenzar Estudiante",
-    popular: true,
-    gradient: "from-primary to-secondary",
-  },
-  {
-    name: "Pro",
-    description: "Cuando ya no seas estudiante",
-    priceMonthly: 199,
-    priceYearly: 1990,
-    icon: Crown,
-    features: [
-      "Todo en Estudiante",
-      "Emprendimientos ilimitados",
-      "Colaboradores",
-      "API access",
-      "Reportes personalizados",
-      "Soporte dedicado",
-    ],
-    cta: "Comenzar Pro",
-    popular: false,
-    gradient: "from-foreground to-foreground/80",
-  },
+const features = [
+  { name: "Productos", free: "3", student: "Ilimitados", pro: "Ilimitados" },
+  { name: "Insumos", free: "10", student: "Ilimitados", pro: "Ilimitados" },
+  { name: "Emprendimientos", free: "1", student: "3", pro: "Ilimitados" },
+  { name: "Calculadora de precio", free: true, student: true, pro: true },
+  { name: "Dashboard", free: "Básico", student: "Completo", pro: "Completo" },
+  { name: "Simulador de escenarios", free: false, student: true, pro: true },
+  { name: "Exportar PDF", free: false, student: true, pro: true },
+  { name: "Historial completo", free: false, student: true, pro: true },
+  { name: "Colaboradores", free: false, student: false, pro: true },
+  { name: "API access", free: false, student: false, pro: true },
+  { name: "Soporte prioritario", free: false, student: true, pro: true },
 ];
 
 export function Pricing() {
   const [isYearly, setIsYearly] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const cards = cardsRef.current.filter(Boolean);
-      if (cards.length === 0) return;
-
-      gsap.set(cards, { opacity: 1 });
-      gsap.fromTo(
-        cards,
-        { y: 40 },
-        {
-          y: 0,
-          stagger: 0.15,
-          duration: 0.8,
-          ease: "power3.out",
-          clearProps: "transform",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 75%",
-            once: true,
-          },
-        }
-      );
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+  const renderCell = (value: boolean | string) => {
+    if (value === true) return <Check className="h-5 w-5 text-secondary" />;
+    if (value === false) return <Minus className="h-5 w-5 text-muted-foreground/30" />;
+    return <span className="text-sm font-medium">{value}</span>;
+  };
 
   return (
-    <section id="pricing" ref={sectionRef} className="py-24 md:py-32 px-4 md:px-6 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-accent/20 to-background" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-primary/10 to-secondary/10 rounded-full blur-3xl pointer-events-none" />
-      
-      <div className="max-w-7xl mx-auto relative z-10">
+    <section id="pricing" className="py-24 md:py-32 px-4 md:px-6 bg-muted/30">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-6">
-            <Zap className="h-4 w-4 text-primary" />
-            <span className="text-sm font-medium text-foreground/80">Precios para estudiantes</span>
-          </div>
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
-            Planes simples,{" "}
-            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              precios justos
-            </span>
-          </h2>
-          <p className="text-lg text-muted-foreground font-body max-w-xl mx-auto">
-            Empieza gratis y crece con tu emprendimiento
+        <div className="text-center mb-16">
+          <p className="font-mono text-sm text-muted-foreground uppercase tracking-wider mb-4">
+            [ Precios ]
           </p>
-        </div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
+            Simple y transparente
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-8">
+            Empieza gratis. Crece cuando lo necesites.
+          </p>
 
-        {/* Toggle */}
-        <div className="flex items-center justify-center gap-0 mb-12">
-          <button
-            onClick={() => setIsYearly(false)}
-            className={`px-6 py-3 text-sm font-medium transition-all rounded-l-full border-2 ${
-              !isYearly
-                ? "bg-gradient-to-r from-primary to-secondary text-white border-transparent"
-                : "bg-white text-foreground border-border hover:border-primary/30"
-            }`}
-          >
-            Mensual
-          </button>
-          <button
-            onClick={() => setIsYearly(true)}
-            className={`px-6 py-3 text-sm font-medium transition-all rounded-r-full border-2 border-l-0 ${
-              isYearly
-                ? "bg-gradient-to-r from-primary to-secondary text-white border-transparent"
-                : "bg-white text-foreground border-border hover:border-primary/30"
-            }`}
-          >
-            Anual
-            <span className="ml-2 px-2 py-0.5 bg-success/20 text-success text-xs rounded-full">-17%</span>
-          </button>
-        </div>
-
-        {/* Cards */}
-        <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
-          {plans.map((plan, index) => (
-            <div
-              key={index}
-              ref={(el) => (cardsRef.current[index] = el)}
-              className={`relative p-8 rounded-3xl transition-all duration-500 hover:-translate-y-2 opacity-100 ${
-                plan.popular
-                  ? "bg-gradient-to-br from-primary to-secondary text-white shadow-friendly-lg scale-[1.02]"
-                  : "bg-white border border-border/50 shadow-card hover:shadow-card-hover"
+          {/* Toggle */}
+          <div className="inline-flex items-center gap-4 p-1 bg-background border border-border">
+            <button
+              onClick={() => setIsYearly(false)}
+              className={`px-6 py-2.5 text-sm font-medium transition-all ${
+                !isYearly
+                  ? "bg-foreground text-background"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
-              {/* Popular badge */}
-              {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-warning text-warning-foreground px-4 py-1.5 text-xs font-semibold rounded-full shadow-md flex items-center gap-1">
-                  <Sparkles className="h-3 w-3" />
-                  Más popular
-                </div>
-              )}
+              Mensual
+            </button>
+            <button
+              onClick={() => setIsYearly(true)}
+              className={`px-6 py-2.5 text-sm font-medium transition-all flex items-center gap-2 ${
+                isYearly
+                  ? "bg-foreground text-background"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              Anual
+              <span className="text-xs px-2 py-0.5 bg-secondary text-secondary-foreground font-bold">
+                -17%
+              </span>
+            </button>
+          </div>
+        </div>
 
-              {/* Icon */}
-              <div className={`h-14 w-14 rounded-2xl ${plan.popular ? 'bg-white/20' : 'bg-gradient-to-br ' + plan.gradient} flex items-center justify-center mb-6 shadow-friendly`}>
-                <plan.icon className={`h-7 w-7 ${plan.popular ? 'text-white' : plan.name === 'Pro' ? 'text-white' : 'text-primary'}`} />
+        {/* Pricing table */}
+        <div className="bg-background border border-border overflow-hidden">
+          {/* Table header */}
+          <div className="grid grid-cols-4 border-b border-border">
+            <div className="p-6 md:p-8">
+              <span className="font-mono text-sm text-muted-foreground">Características</span>
+            </div>
+            
+            {/* Free */}
+            <div className="p-6 md:p-8 border-l border-border">
+              <h3 className="text-xl font-bold mb-1">Gratis</h3>
+              <div className="flex items-baseline gap-1 mb-4">
+                <span className="text-3xl font-bold">$0</span>
+                <span className="text-muted-foreground text-sm">/mes</span>
               </div>
-
-              {/* Plan name */}
-              <div className="mb-6">
-                <h3 className="text-2xl font-bold mb-1">{plan.name}</h3>
-                <p className={`text-sm ${plan.popular ? "text-white/80" : "text-muted-foreground"}`}>
-                  {plan.description}
-                </p>
-              </div>
-
-              {/* Price */}
-              <div className="mb-6">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-4xl md:text-5xl font-bold tracking-tight">
-                    ${isYearly ? plan.priceYearly : plan.priceMonthly}
-                  </span>
-                  <span className={`text-sm ${plan.popular ? "text-white/70" : "text-muted-foreground"}`}>
-                    MXN/{isYearly ? "año" : "mes"}
-                  </span>
-                </div>
-              </div>
-
-              {/* CTA */}
-              <Button
-                className={`w-full mb-6 h-12 font-semibold rounded-full transition-all ${
-                  plan.popular
-                    ? "bg-white text-primary hover:bg-white/90 shadow-md"
-                    : "bg-gradient-to-r from-primary to-secondary text-white hover:shadow-friendly"
-                }`}
-                asChild
+              <Link
+                to="/auth"
+                className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-secondary transition-colors"
               >
-                <Link to="/auth">
-                  {plan.cta}
-                </Link>
-              </Button>
+                Comenzar <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+            
+            {/* Student - Highlighted */}
+            <div className="p-6 md:p-8 border-l border-border bg-foreground text-background relative">
+              <div className="absolute -top-0 left-1/2 -translate-x-1/2 bg-secondary text-secondary-foreground px-3 py-1 text-xs font-bold">
+                POPULAR
+              </div>
+              <h3 className="text-xl font-bold mb-1">Estudiante</h3>
+              <div className="flex items-baseline gap-1 mb-4">
+                <span className="text-3xl font-bold">${isYearly ? "790" : "79"}</span>
+                <span className="text-background/60 text-sm">/{isYearly ? "año" : "mes"}</span>
+              </div>
+              <Link
+                to="/auth"
+                className="inline-flex items-center gap-2 text-sm font-medium bg-secondary text-secondary-foreground px-4 py-2 hover:bg-secondary/90 transition-colors"
+              >
+                Comenzar <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+            
+            {/* Pro */}
+            <div className="p-6 md:p-8 border-l border-border">
+              <h3 className="text-xl font-bold mb-1">Pro</h3>
+              <div className="flex items-baseline gap-1 mb-4">
+                <span className="text-3xl font-bold">${isYearly ? "1990" : "199"}</span>
+                <span className="text-muted-foreground text-sm">/{isYearly ? "año" : "mes"}</span>
+              </div>
+              <Link
+                to="/auth"
+                className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-secondary transition-colors"
+              >
+                Comenzar <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
 
-              {/* Features */}
-              <ul className="space-y-3">
-                {plan.features.map((feature, featureIndex) => (
-                  <li 
-                    key={featureIndex} 
-                    className={`flex items-start gap-3 text-sm ${
-                      plan.popular ? "text-white/90" : "text-foreground/70"
-                    }`}
-                  >
-                    <Check className={`h-5 w-5 shrink-0 ${plan.popular ? 'text-white' : 'text-success'}`} />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
+          {/* Feature rows */}
+          {features.map((feature, index) => (
+            <div 
+              key={feature.name} 
+              className={`grid grid-cols-4 ${index !== features.length - 1 ? "border-b border-border" : ""}`}
+            >
+              <div className="p-4 md:px-8 md:py-5 flex items-center">
+                <span className="text-sm">{feature.name}</span>
+              </div>
+              <div className="p-4 md:px-8 md:py-5 border-l border-border flex items-center justify-center">
+                {renderCell(feature.free)}
+              </div>
+              <div className="p-4 md:px-8 md:py-5 border-l border-border bg-foreground/5 flex items-center justify-center">
+                {renderCell(feature.student)}
+              </div>
+              <div className="p-4 md:px-8 md:py-5 border-l border-border flex items-center justify-center">
+                {renderCell(feature.pro)}
+              </div>
             </div>
           ))}
         </div>
+
+        {/* Bottom note */}
+        <p className="text-center text-muted-foreground text-sm mt-8">
+          ¿Tienes un grupo de más de 10 estudiantes? <a href="mailto:hola@finanet.app" className="text-secondary hover:underline">Escríbenos</a> para un plan especial.
+        </p>
       </div>
     </section>
   );
