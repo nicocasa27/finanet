@@ -7,28 +7,28 @@ gsap.registerPlugin(ScrollTrigger);
 
 const faqs = [
   {
-    question: "¿Necesito saber de contabilidad?",
-    answer: "Para nada. Finanet está diseñado para emprendedores sin conocimientos contables. Solo registra cuánto entra y cuánto sale, nosotros hacemos el resto.",
+    question: "¿Tengo un side hustle pequeño, me sirve Finanet?",
+    answer: "¡Claro! Finanet está diseñado exactamente para eso: emprendimientos pequeños como venta de brownies, galletas, productos artesanales, servicios freelance. No importa si vendes 10 o 1000 unidades.",
   },
   {
-    question: "¿Qué diferencia hay con Excel?",
-    answer: "Excel requiere fórmulas, organización y tiempo. Finanet es automático: registras un movimiento y al instante ves tu utilidad, márgenes y alertas. Sin errores, sin complicaciones.",
+    question: "¿Puedo usarlo para un proyecto de clase?",
+    answer: "Sí, muchos estudiantes usan Finanet para sus proyectos de emprendimiento. Puedes generar reportes PDF listos para presentar a tus profesores o en pitch competitions.",
   },
   {
-    question: "¿Mis datos están seguros?",
-    answer: "Absolutamente. Usamos encriptación de nivel bancario, copias de seguridad automáticas y servidores seguros. Tus datos financieros están protegidos 24/7.",
+    question: "¿Cómo calculo cuánto debo cobrar?",
+    answer: "Agrega tus ingredientes/insumos con sus costos, indica cuánto usas de cada uno en tu producto, y Finanet calculará el costo total. Luego usa la calculadora de precio para definir tu margen deseado.",
   },
   {
-    question: "¿Puedo gestionar varios negocios?",
-    answer: "Sí. En el plan Pro puedes gestionar hasta 3 negocios, y en el plan Negocio no hay límite. Cada negocio tiene su propio dashboard y reportes.",
+    question: "¿Qué pasa cuando me gradúe?",
+    answer: "Tu cuenta y datos se mantienen. Puedes seguir usando el plan gratuito o actualizar a Pro si tu negocio crece. Muchos usuarios empiezan como estudiantes y continúan después.",
   },
   {
-    question: "¿Qué pasa si supero el límite?",
-    answer: "Te notificaremos cuando estés cerca del límite. Puedes actualizar a Pro en cualquier momento para seguir registrando movimientos sin perder tu historial.",
+    question: "¿Es realmente gratis para estudiantes?",
+    answer: "El plan gratuito es para siempre y te permite hasta 3 productos y 10 insumos. Para la mayoría de side hustles universitarios es suficiente. Si necesitas más, el plan Estudiante es muy accesible.",
   },
   {
-    question: "¿Puedo cancelar cuando quiera?",
-    answer: "Sí, sin compromisos. Cancela cuando quieras y seguirás teniendo acceso hasta el final de tu período de facturación.",
+    question: "¿Necesito facturar para usar Finanet?",
+    answer: "No necesitas. Finanet es para calcular costos y márgenes, no para facturación. Es perfecto para emprendimientos informales que quieren profesionalizarse poco a poco.",
   },
 ];
 
@@ -77,7 +77,7 @@ export function FAQ() {
             </span>
           </h2>
           <p className="text-lg text-muted-foreground font-body">
-            Respuestas claras para emprendedores como tú
+            Respuestas para emprendedores universitarios
           </p>
         </div>
 

@@ -1,42 +1,42 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { BarChart3, TrendingUp, FileText, Zap, Shield, PieChart } from "lucide-react";
+import { Calculator, DollarSign, Package, TrendingUp, FileText, Smartphone } from "lucide-react";
 
 const features = [
   {
-    icon: BarChart3,
-    title: "Control total",
-    description: "Visualiza ingresos, gastos y flujo de caja en tiempo real con dashboards intuitivos.",
+    icon: Calculator,
+    title: "Costeo por receta",
+    description: "Agrega ingredientes y calcula el costo de producción automáticamente para cada producto.",
     color: "from-primary to-primary/80",
   },
   {
-    icon: TrendingUp,
-    title: "Proyecciones inteligentes",
-    description: "Anticipa tu cierre de mes con proyecciones basadas en tus datos reales.",
+    icon: DollarSign,
+    title: "Precio sugerido",
+    description: "Te decimos cuánto cobrar para alcanzar el margen de ganancia que deseas.",
     color: "from-secondary to-secondary/80",
   },
   {
-    icon: FileText,
-    title: "Reportes automáticos",
-    description: "Genera estados financieros listos para exportar en PDF o CSV.",
+    icon: Package,
+    title: "Inventario de insumos",
+    description: "Registra tus materias primas con sus precios y úsalas en múltiples productos.",
     color: "from-success to-success/80",
   },
   {
-    icon: Zap,
-    title: "Insights accionables",
-    description: "Recibe alertas y recomendaciones para mejorar tu rentabilidad.",
+    icon: TrendingUp,
+    title: "Simulador de escenarios",
+    description: "¿Qué pasa si sube un ingrediente? Proyecta ganancias y analiza impactos en tu margen.",
     color: "from-warning to-warning/80",
   },
   {
-    icon: Shield,
-    title: "Seguridad bancaria",
-    description: "Tus datos protegidos con encriptación de nivel empresarial.",
+    icon: FileText,
+    title: "Exporta reportes",
+    description: "Genera reportes PDF listos para tus clases, proyectos de emprendimiento o inversionistas.",
     color: "from-primary to-secondary",
   },
   {
-    icon: PieChart,
-    title: "Categorización fácil",
-    description: "Organiza tus movimientos con categorías personalizables y colores.",
+    icon: Smartphone,
+    title: "Desde cualquier lugar",
+    description: "Accede desde tu celular entre clases. Registra productos y costos en segundos.",
     color: "from-secondary to-primary",
   },
 ];
@@ -58,18 +58,18 @@ export function Features() {
         {/* Header */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent rounded-full mb-6">
-            <Zap className="h-4 w-4 text-primary" />
+            <Calculator className="h-4 w-4 text-primary" />
             <span className="text-sm font-medium text-foreground/80">Funcionalidades</span>
           </div>
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight mb-6">
             Todo lo que necesitas
             <br />
             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              en un solo lugar
+              para costear bien
             </span>
           </h2>
           <p className="font-body text-lg text-muted-foreground max-w-2xl mx-auto">
-            Herramientas diseñadas para emprendedores que quieren entender sus números sin complicaciones.
+            Herramientas diseñadas para emprendedores universitarios que quieren saber cuánto deben cobrar.
           </p>
         </div>
         

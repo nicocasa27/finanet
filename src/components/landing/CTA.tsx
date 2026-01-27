@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowRight, Sparkles, Rocket } from "lucide-react";
+import { ArrowRight, Calculator, Rocket } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -41,17 +41,17 @@ export function CTA() {
         <div ref={contentRef} className="text-center text-white">
           {/* Icon */}
           <div className="inline-flex h-20 w-20 items-center justify-center rounded-3xl bg-white/20 backdrop-blur-sm mb-8 shadow-lg">
-            <Rocket className="h-10 w-10 text-white" />
+            <Calculator className="h-10 w-10 text-white" />
           </div>
           
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-            Empieza a tomar el control
+            Deja de adivinar,
             <br />
-            de tus finanzas
+            empieza a calcular
           </h2>
           
           <p className="text-xl text-white/80 mb-10 max-w-2xl mx-auto font-body">
-            Únete a cientos de emprendedores que ya entienden sus números y toman mejores decisiones cada día.
+            Únete a cientos de emprendedores universitarios que ya saben exactamente cuánto ganan con cada producto.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -59,20 +59,17 @@ export function CTA() {
               to="/auth" 
               className="group inline-flex items-center justify-center gap-2 bg-white text-primary px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
             >
-              <Sparkles className="h-5 w-5" />
-              <span>Comenzar gratis</span>
+              <Rocket className="h-5 w-5" />
+              <span>Calcular mi primer producto</span>
               <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Link>
-            <button className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-full font-semibold text-lg border border-white/30 hover:bg-white/20 transition-all duration-300">
-              Ver demo
-            </button>
           </div>
           
           {/* Trust indicators */}
           <div className="mt-12 flex flex-wrap justify-center gap-8 text-white/70 text-sm">
-            <span>✓ Sin tarjeta requerida</span>
-            <span>✓ Configura en 2 minutos</span>
-            <span>✓ Soporte incluido</span>
+            <span>✓ Gratis para estudiantes</span>
+            <span>✓ Sin conocimientos previos</span>
+            <span>✓ Listo en 2 minutos</span>
           </div>
         </div>
       </div>

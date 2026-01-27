@@ -14,11 +14,11 @@ import Reset from "./pages/Reset";
 import NotFound from "./pages/NotFound";
 import { AppLayout } from "./components/app/AppLayout";
 import Dashboard from "./pages/app/Dashboard";
-import Transacciones from "./pages/app/Transacciones";
-import Categorias from "./pages/app/Categorias";
+import Productos from "./pages/app/Productos";
+import Insumos from "./pages/app/Insumos";
+import Calculadora from "./pages/app/Calculadora";
+import Simulador from "./pages/app/Simulador";
 import Reportes from "./pages/app/Reportes";
-import Indicadores from "./pages/app/Indicadores";
-import Proyecciones from "./pages/app/Proyecciones";
 import Suscripcion from "./pages/app/Suscripcion";
 import Ajustes from "./pages/app/Ajustes";
 import Admin from "./pages/app/Admin";
@@ -62,11 +62,11 @@ function AppRoutes() {
       
       {/* Protected app routes */}
       <Route path="/app" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-      <Route path="/app/transacciones" element={<ProtectedRoute><Transacciones /></ProtectedRoute>} />
-      <Route path="/app/categorias" element={<ProtectedRoute><Categorias /></ProtectedRoute>} />
+      <Route path="/app/productos" element={<ProtectedRoute><Productos /></ProtectedRoute>} />
+      <Route path="/app/insumos" element={<ProtectedRoute><Insumos /></ProtectedRoute>} />
+      <Route path="/app/calculadora" element={<ProtectedRoute><Calculadora /></ProtectedRoute>} />
+      <Route path="/app/simulador" element={<ProtectedRoute><Simulador /></ProtectedRoute>} />
       <Route path="/app/reportes" element={<ProtectedRoute><Reportes /></ProtectedRoute>} />
-      <Route path="/app/indicadores" element={<ProtectedRoute><Indicadores /></ProtectedRoute>} />
-      <Route path="/app/proyecciones" element={<ProtectedRoute><Proyecciones /></ProtectedRoute>} />
       <Route path="/app/suscripcion" element={<ProtectedRoute><Suscripcion /></ProtectedRoute>} />
       <Route path="/app/ajustes" element={<ProtectedRoute><Ajustes /></ProtectedRoute>} />
       <Route path="/app/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
