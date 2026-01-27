@@ -1,113 +1,114 @@
-import { useEffect, useRef, useState } from "react";
-import { Star, Quote, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const testimonials = [
   {
-    quote: "Estaba cobrando mis brownies muy baratos. Finanet me mostró que perdía dinero en cada venta.",
+    quote: "Estaba cobrando mis brownies muy baratos. Finanet me mostró que perdía dinero en cada venta. Ahora tengo 40% de margen.",
     author: "Ana Martínez",
-    role: "Venta de repostería",
-    avatar: "AM",
-    rating: 5,
+    role: "Repostería artesanal",
+    metric: "+40%",
+    metricLabel: "margen",
   },
   {
-    quote: "Usé el reporte de costeo para mi proyecto de emprendimiento y saqué 10. Mis profes quedaron impresionados.",
-    author: "Carlos López",
-    role: "Estudiante de Negocios",
-    avatar: "CL",
-    rating: 5,
+    quote: "Usé el reporte de costeo para mi proyecto de emprendimiento y saqué 10. Mis profes quedaron impresionados con el nivel de detalle.",
+    author: "Carlos López", 
+    role: "Estudiante de Negocios, ITESM",
+    metric: "10/10",
+    metricLabel: "calificación",
   },
   {
-    quote: "Por fin sé exactamente cuánto me cuesta cada producto. Ahora cobro lo justo y gano lo que merezco.",
+    quote: "Por fin sé exactamente cuánto me cuesta cada producto. El simulador me ayudó a planear cuando subieron los materiales.",
     author: "María González",
     role: "Joyería artesanal",
-    avatar: "MG",
-    rating: 5,
+    metric: "3x",
+    metricLabel: "productos",
   },
 ];
 
 export function Testimonial() {
-  const [mounted, setMounted] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
+  const [current, setCurrent] = useState(0);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const next = () => setCurrent((prev) => (prev + 1) % testimonials.length);
+  const prev = () => setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length);
 
   return (
-    <section ref={sectionRef} className="py-20 md:py-32 px-4 md:px-6 w-full bg-background relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-accent/30 to-background" />
-      
-      <div className="max-w-7xl mx-auto relative z-10">
+    <section className="py-24 md:py-32 px-4 md:px-6 w-full bg-background">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-secondary/10 rounded-full mb-6">
-            <Star className="h-4 w-4 text-secondary fill-secondary" />
-            <span className="text-sm font-medium text-foreground/80">Lo que dicen otros estudiantes</span>
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16">
+          <div className="max-w-xl">
+            <p className="font-mono text-sm text-muted-foreground uppercase tracking-wider mb-4">
+              [ Testimonios ]
+            </p>
+            <h2 className="text-4xl md:text-5xl font-bold leading-tight tracking-tight">
+              Lo que dicen
+              <br />
+              <span className="text-secondary">quienes ya lo usan</span>
+            </h2>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold leading-tight tracking-tight mb-4">
-            Emprendedores universitarios
-            <br />
-            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              ya confían en nosotros
-            </span>
-          </h2>
+          
+          {/* Navigation arrows */}
+          <div className="flex gap-3">
+            <button
+              onClick={prev}
+              className="h-14 w-14 border-2 border-foreground flex items-center justify-center hover:bg-foreground hover:text-background transition-colors"
+              aria-label="Anterior"
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </button>
+            <button
+              onClick={next}
+              className="h-14 w-14 bg-foreground text-background flex items-center justify-center hover:bg-foreground/80 transition-colors"
+              aria-label="Siguiente"
+            >
+              <ChevronRight className="h-6 w-6" />
+            </button>
+          </div>
         </div>
 
-        {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map((testimonial, index) => (
-            <div
-              key={index}
-              className="group relative bg-white/90 backdrop-blur-sm rounded-3xl p-8 border border-border/50 hover:border-primary/30 shadow-card hover:shadow-card-hover transition-all duration-500 hover:-translate-y-1"
-              style={{
-                opacity: mounted ? 1 : 0,
-                transform: mounted ? "translateY(0)" : "translateY(30px)",
-                transition: `all 0.5s ease-out ${index * 0.15}s`,
-              }}
-            >
-              {/* Quote icon */}
-              <div className="absolute -top-3 -left-2">
-                <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-friendly">
-                  <Quote className="h-5 w-5 text-white" />
-                </div>
+        {/* Testimonial display - Large single card */}
+        <div className="grid md:grid-cols-3 gap-6 md:gap-8">
+          {/* Main quote - spans 2 cols */}
+          <div className="md:col-span-2 bg-foreground text-background p-8 md:p-12 min-h-[300px] flex flex-col justify-between">
+            <blockquote className="text-2xl md:text-3xl lg:text-4xl font-medium leading-relaxed mb-8">
+              "{testimonials[current].quote}"
+            </blockquote>
+            <div className="flex items-center gap-4">
+              <div className="h-14 w-14 bg-secondary flex items-center justify-center text-foreground font-bold text-lg">
+                {testimonials[current].author.split(' ').map(n => n[0]).join('')}
               </div>
-
-              {/* Rating */}
-              <div className="flex gap-1 mb-4 pt-4">
-                {Array.from({ length: testimonial.rating }).map((_, i) => (
-                  <Star key={i} className="h-5 w-5 text-warning fill-warning" />
-                ))}
-              </div>
-
-              {/* Quote */}
-              <p className="font-body text-foreground/90 mb-6 leading-relaxed text-lg">
-                "{testimonial.quote}"
-              </p>
-
-              {/* Author */}
-              <div className="flex items-center gap-4">
-                <div className="h-12 w-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-semibold shadow-friendly">
-                  {testimonial.avatar}
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground">{testimonial.author}</p>
-                  <p className="text-sm text-muted-foreground">{testimonial.role}</p>
-                </div>
+              <div>
+                <p className="font-bold text-lg">{testimonials[current].author}</p>
+                <p className="text-background/60">{testimonials[current].role}</p>
               </div>
             </div>
-          ))}
+          </div>
+
+          {/* Metric highlight */}
+          <div className="bg-secondary text-foreground p-8 md:p-12 flex flex-col justify-center items-center text-center">
+            <span className="text-6xl md:text-7xl lg:text-8xl font-bold mb-2">
+              {testimonials[current].metric}
+            </span>
+            <span className="text-foreground/80 font-medium uppercase tracking-wider">
+              {testimonials[current].metricLabel}
+            </span>
+          </div>
         </div>
 
-        {/* CTA */}
-        <div className="text-center mt-12">
-          <a 
-            href="/auth"
-            className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all"
-          >
-            <span>Únete a ellos</span>
-            <ArrowRight className="h-4 w-4" />
-          </a>
+        {/* Pagination dots */}
+        <div className="flex justify-center gap-3 mt-8">
+          {testimonials.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrent(index)}
+              className={`h-2 transition-all duration-300 ${
+                index === current 
+                  ? "w-8 bg-secondary" 
+                  : "w-2 bg-foreground/20 hover:bg-foreground/40"
+              }`}
+              aria-label={`Ver testimonio ${index + 1}`}
+            />
+          ))}
         </div>
       </div>
     </section>
