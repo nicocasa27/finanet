@@ -85,11 +85,11 @@ export default {
         'premium-md': 'var(--shadow-md)',
         'premium-lg': 'var(--shadow-lg)',
         'premium-xl': 'var(--shadow-xl)',
-        'premium-glow': 'var(--shadow-glow)',
         'card': 'var(--shadow-card)',
         'card-hover': 'var(--shadow-card-hover)',
-        'friendly': '0 8px 30px -10px hsla(262, 83%, 58%, 0.2)',
-        'friendly-lg': '0 20px 50px -15px hsla(262, 83%, 58%, 0.25)',
+        'brutal': '4px 4px 0 0 hsl(231 59% 21%)',
+        'brutal-sm': '2px 2px 0 0 hsl(231 59% 21%)',
+        'brutal-lg': '6px 6px 0 0 hsl(231 59% 21%)',
       },
       keyframes: {
         "accordion-down": {
